@@ -1,10 +1,8 @@
-# How to print wpf treegrid with pdfviewercontrol
+# How to Print WPF TreeGrid with PdfViewerControl?
 
-This sample illustrates how to print [WPF TreeGrid](https://www.syncfusion.com/wpf-controls/treegrid) with [PdfViewerControl](https://help.syncfusion.com/wpf/pdf-viewer/printing-pdf-files).
+This sample illustrates how to print [WPF TreeGrid](https://www.syncfusion.com/wpf-controls/treegrid) (SfTreeGrid) with [PdfViewerControl](https://help.syncfusion.com/wpf/pdf-viewer/printing-pdf-files).
 
-## Default Printing
-
-The printing feature can be achieved by exporting the `TreeGrid` to PDF and printing the exported PDF using the `PdfViewerControl`.
+The printing feature can be achieved by exporting the **TreeGrid** to PDF and printing the exported PDF using the **PdfViewerControl**.
 
 ``` c#
 var options = new TreeGridPdfExportingOptions();
@@ -32,17 +30,17 @@ private void Window_Loaded(object sender, RoutedEventArgs e)
 }
 ```
 
-## Custom Printing
+![Printing TreeGrid with PdfViewerControl](PrintPreview.png)
 
-You can print only the parent and expanded child nodes by overriding the `ExportNodesToPdf` method of the `TreeGridToPdfConverter` class.
+### Print Parent and Expanded Child Nodes:
 
-```c#
+You can print only the parent and expanded child nodes by overriding the [ExportNodesToPdf](https://help.syncfusion.com/cr/wpf/Syncfusion.UI.Xaml.TreeGrid.Converter.TreeGridToPdfConverter.html#Syncfusion_UI_Xaml_TreeGrid_Converter_TreeGridToPdfConverter_ExportNodesToPdf_Syncfusion_UI_Xaml_TreeGrid_SfTreeGrid_Syncfusion_UI_Xaml_TreeGrid_TreeNodes_Syncfusion_Pdf_Grid_PdfGrid_Syncfusion_UI_Xaml_TreeGrid_Converter_TreeGridPdfExportingOptions_) method of the [TreeGridToPdfConverter](https://help.syncfusion.com/cr/wpf/Syncfusion.UI.Xaml.TreeGrid.Converter.TreeGridToPdfConverter.html) class.
+
+``` csharp
 var options = new TreeGridPdfExportingOptions();
 options.AllowIndentColumn = true;
 options.FitAllColumnsInOnePage = true;
-
 var document = treeGrid.ExportToPdf(options, true);
-
 PdfViewerControl pdfViewer = new PdfViewerControl();
 MemoryStream stream = new MemoryStream();
 document.Save(stream);
@@ -57,10 +55,12 @@ pdfViewer.Print(true);
 public class TreeGridCustomPdfConverter : TreeGridToPdfConverter
 {
     internal bool _excludeNonExpandedNodes;
+
     public TreeGridCustomPdfConverter(bool excludeNonExpandedNodes) :base()
     {
         _excludeNonExpandedNodes = excludeNonExpandedNodes;
     }
+
     /// <summary>
     /// ExportNodes to PDF
     /// </summary>
